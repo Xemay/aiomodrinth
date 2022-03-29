@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+setup.py
+aiomodrinth/aiomodrinth.egg-info/PKG-INFO
+aiomodrinth/aiomodrinth.egg-info/SOURCES.txt
+aiomodrinth/aiomodrinth.egg-info/dependency_links.txt
+aiomodrinth/aiomodrinth.egg-info/top_level.txt
