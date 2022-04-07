@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="aiomodrinth",
-    version="0.1",
+    version="0.1a",
     author="Xemay",
     description="Async API wrapper for modrinth.com",
     long_description_content_type="text/markdown",
@@ -15,6 +15,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    instal_requires=["aiohttp"],
     package_dir={"": "aiomodrinth"},
     packages=setuptools.find_packages(where="aiomodrinth"),
     python_requires=">=3.6",
