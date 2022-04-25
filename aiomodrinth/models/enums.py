@@ -31,6 +31,7 @@ class Category(Enum):
 class Loader(Enum):
     FORGE = 'forge'
     FABRIC = 'fabric'
+    QUILT = 'quilt'
 
     @staticmethod
     def fromlist(loaders: list) -> list['Loader']:

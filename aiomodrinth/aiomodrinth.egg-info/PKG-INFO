@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: aiomodrinth
-Version: 0.1
+Version: 0.1a0
 Summary: Async API wrapper for modrinth.com
 Home-page: https://github.com/Xemay/aiomodrinth
 Author: Xemay
