@@ -10,9 +10,9 @@ from .utils import string_to_datetime
 @dataclass
 class User:
     username: str
-    name: str | None
-    email: str | None
-    bio: str | None
+    name: Optional[str]
+    email: Optional[str]
+    bio: Optional[str]
     id: str
     github_id: int
     avatar_url: str

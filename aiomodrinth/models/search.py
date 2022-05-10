@@ -6,6 +6,7 @@ from aiomodrinth.models.enums import SupportStatus, ProjectType, Category
 
 from aiomodrinth.models.utils import string_to_datetime
 
+from typing import Optional
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -26,22 +27,22 @@ class SearchResults:
 
 @dataclass
 class SearchProject:
-    slug: str | None
-    title: str | None
-    description: str | None
-    categories: list[Category] | None
-    client_side: SupportStatus | None
-    server_side: SupportStatus | None
+    slug: Optional[str]
+    title: Optional[str]
+    description: Optional[str]
+    categories: Optional[list[Category]]
+    client_side: Optional[SupportStatus]
+    server_side: Optional[SupportStatus]
     project_type: ProjectType
     downloads: int
-    icon_url: str | None
+    icon_url: Optional[str]
     project_id: str
     author: str
     versions: list[str]
     follows: int
     date_created: datetime
     date_modified: datetime
-    latest_version: str | None
+    latest_version: Optional[str]
     license: str
     gallery: list[str]
 

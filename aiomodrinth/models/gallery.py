@@ -9,8 +9,8 @@ from .utils import string_to_datetime
 class GalleryImage:
     url: str
     featured: bool
-    title: str | None
-    description: str | None
+    title: Optional[str]
+    description: Optional[str]
     created: datetime
 
     @classmethod
