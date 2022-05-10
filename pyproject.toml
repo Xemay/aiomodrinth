@@ -4,6 +4,7 @@ version = "0.1.1"
 description = "Async API wrapper for modrinth.com"
 authors = ["Xemay"]
 license = "MIT"
+homepage = "https://github.com/Xemay/aiomodrinth"
 
 [tool.poetry.dependencies]
 python = "^3.6"
