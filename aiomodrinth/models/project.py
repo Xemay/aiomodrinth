@@ -19,7 +19,7 @@ class GameVersion(NamedTuple):
 
 @dataclass
 class Project:
-    slug: str | None
+    slug: Optional[str]
     title: str
     description: str
     categories: list[Category]
@@ -28,14 +28,14 @@ class Project:
     body: str
     status: ProjectStatus
     license: License
-    issues_url: str | None
-    source_url: str | None
-    wiki_url: str | None
-    discord_url: str | None
+    issues_url: Optional[str]
+    source_url: Optional[str]
+    wiki_url: Optional[str]
+    discord_url: Optional[str]
     donation_urls: list[str]
     project_type: ProjectType
     downloads: int
-    icon_url: str | None
+    icon_url: Optional[str]
     id: str
     team: str
     moderator_message: str
