@@ -1,5 +1,3 @@
-import aiohttp
-import json
 from typing import Literal
 
 from ._requests import *
@@ -7,10 +5,12 @@ from aiomodrinth.common import BASE_URL
 
 from aiomodrinth.exceptions import InvalidToken, InvalidUser
 
+from aiomodrinth.facets import Facets
+
 from aiomodrinth.models.project import Project
 from aiomodrinth.models.user import User
 from aiomodrinth.models.member import TeamMember
-from aiomodrinth.models.search import SearchResults
+from aiomodrinth.models.search import SearchResults, SearchProject
 from aiomodrinth.exceptions import ObjectNotFound
 
 
@@ -47,19 +47,10 @@ class ModRinthApi:
                      index: Literal['relevance', 'downloads', 'follows', 'newest', 'updated'] = 'relevance',
                      offset: int = 0,
                      limit: int = 10,
-                     **kwargs) -> SearchResults:
-        facets = []
-        for k in kwargs.keys():
-            if isinstance(kwargs[k], list):
-                for i in kwargs[k]:
-                    facets.append([f"{k}:{i}"])
-            elif isinstance(kwargs[k], str):
-                facets.append([f"{k}:{kwargs[k]}"])
-            else:
-                raise ValueError("Sorting params must be a string or list")
-        params = {'query': query, 'index': str(index), 'offset': str(offset), 'limit': str(limit)}
-        if len(facets) > 0:
-            params['facets'] = json.dumps(facets)
+                     facets: Facets = None) -> SearchResults:
+        params = {'query': query, 'index': index, 'offset': offset, 'limit': limit}
+        if facets is not None:
+            params['facets'] = str(facets)
         response = await get('search', params=params)
         if response.status == 400:
             raise ValueError("Incorrect parameters are specified")
@@ -111,3 +102,10 @@ class ModRinthApi:
         if response.status == 404:
             return None
         return TeamMember.fromlist(await response.json())
+
+
+async def full_project(search_project: SearchProject) -> Project:
+    async with aiohttp.ClientSession() as session:
+        resp = await session.get(url=BASE_URL + f'project/{search_project.project_id}')
+        project = Project.fromjson(await resp.json())
+        return project

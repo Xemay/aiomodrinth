@@ -1,4 +1,7 @@
+import aiomodrinth
 from aiomodrinth.api import ModRinthApi
+from aiomodrinth import Facet, Facets
+from aiomodrinth.models.project import Category, GameVersion, ProjectType, ProjectLicense
 
 import asyncio
 
@@ -6,17 +9,12 @@ api = ModRinthApi()
 
 
 async def search():
-    results = await api.search("craft", limit=3, index='downloads', categories=['fabric', 'magic'], versions="1.18.1")
-
-    # in addition to the category, you can sort the results by license, game version and project type
-    # project_type=['mod', 'modpack'] or project_type='mod'
-    # ----
-    # parameters can be lists or string
+    facets = Facets(Facet(Category.ADVENTURE) & Facet(Category.FABRIC), Facet(GameVersion("1.17.1")))
+    results = await api.search(query="", limit=20, index='relevance', facets=facets)
 
     print(results.hits[0].downloads)
-    # to get a complete project you can use the method .to_project() for any search result in 'hits'
 
-    project = await results.hits[0].to_project()
-    print(project.body)
+    # in addition to the category and game version, you can sort the results by license and project type
+    # project_type=['mod', 'modpack'] or project_type='mod'
 
 asyncio.run(search())

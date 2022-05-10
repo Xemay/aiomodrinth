@@ -18,6 +18,10 @@ class Category(Enum):
 
     FABRIC = 'fabric'
     FORGE = 'forge'
+    QUILT = 'quilt'
+
+    def __str__(self):
+        return self.value
 
     @classmethod
     def fromlist(cls, categories: list[str]) -> list['Category']:
@@ -56,6 +60,9 @@ class ProjectStatus(Enum):
 class ProjectType(Enum):
     MOD = 'mod'
     MODPACK = 'modpack'
+
+    def __str__(self):
+        return self.value
 
 
 class VersionType(Enum):

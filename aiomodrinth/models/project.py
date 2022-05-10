@@ -1,12 +1,20 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional, Any
+from enum import Enum
+from typing import Optional, Any, NamedTuple
 
 from .utils import string_to_datetime
 from aiomodrinth.models.enums import SupportStatus, ProjectStatus, ProjectType, Category, DependencyType, VersionType, \
     Loader, HashAlgorithm
 from aiomodrinth.license import License
 from aiomodrinth.models.gallery import GalleryImage
+
+
+class GameVersion(NamedTuple):
+    version: str
+
+    def __str__(self):
+        return self.version
 
 
 @dataclass
@@ -101,7 +109,8 @@ class ProjectVersion:
     files: list[VersionFile]
 
     @classmethod
-    def fromjson(cls, kwargs: dict) -> 'ProjectVersion':
+    def fromjson(cls, kwargs: dict) -> 'GameVersion':
+        kwargs["game_versions"] = [GameVersion(version) for version in kwargs["game_versions"]]
         kwargs['version_type'] = VersionType[kwargs['version_type'].upper()]
         kwargs['loaders'] = Loader.fromlist(kwargs['loaders'])
         kwargs['date_published'] = string_to_datetime(kwargs['date_published'])
@@ -110,7 +119,7 @@ class ProjectVersion:
         return cls(**kwargs)
 
     @staticmethod
-    def fromlist(pversions: list) -> list['ProjectVersion']:
+    def fromlist(pversions: list) -> list['GameVersion']:
         return [ProjectVersion.fromjson(pvers) for pvers in pversions]
 
 
@@ -119,3 +128,21 @@ class Dependency:
     version_id: Optional[str]
     project_id: Optional[str]
     dependency_type: DependencyType
+
+
+class ProjectLicense(Enum):
+    CUSTOM = 'custom'
+    LGPL = 'lgpl'
+    APACHE = 'apache',
+    BSD_2_CLAUSE = 'bsd-2-clause'
+    BSD_3_CLAUSE = 'bsd-3-clause',
+    BSL = 'bsl'
+    CC0 = 'cc0'
+    UNLICENSE = 'unlicense'
+    MPL = 'mpl'
+    MIT = 'mit'
+    ARR = 'arr'
+    LGPL3 = 'lgpl-3'
+
+    def __str__(self):
+        return self.value

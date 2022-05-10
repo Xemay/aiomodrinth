@@ -1,4 +1,5 @@
 from datetime import datetime
+from abc import ABC, abstractmethod
 
 
 def string_to_datetime(date: str, format_: str = None) -> datetime:
